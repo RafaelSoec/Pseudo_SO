@@ -12,7 +12,10 @@ public class AlgorithmFIFO implements SchedulingAlgorithm {
 		// TODO Auto-generated method stub
 		
 		for(ProcessDTO procedure: procedures) {
-			System.out.println("FIFO in execution - Duration Time: " + procedure.getDurationTime() + " Arrival Time: " + procedure.getArrivalTime());
+			System.out.println("FIFO in execution - " + 
+					"Process Id: " + procedure.getId() + 
+					" Duration Time: " + procedure.getDurationTime() + 
+					" Arrival Time: " + procedure.getArrivalTime());
 		}
 	}
 
