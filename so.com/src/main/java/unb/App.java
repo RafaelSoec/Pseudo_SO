@@ -4,7 +4,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 import unb.modules.process.ProcessMain;
-import unb.modules.process.dtos.ProcessDTO;
+import unb.modules.process.dtos.Procedure;
+import unb.utils.ManagerFile;
 
 /**
  */
@@ -15,17 +16,17 @@ public class App {
     
     
     public static void toSchedullerProcess(){
-    	ProcessDTO procedure1 = new ProcessDTO();
+    	Procedure procedure1 = new Procedure();
     	procedure1.setId(1L);
-    	procedure1.setArrivalTime(100L);
-    	procedure1.setDurationTime(200L);
+    	procedure1.setArrivalTime(1);
+    	procedure1.setDurationTime(8);
     	
-    	ProcessDTO procedure2 = new ProcessDTO();
+    	Procedure procedure2 = new Procedure();
     	procedure2.setId(2L);
-    	procedure2.setArrivalTime(100L);
-    	procedure2.setDurationTime(200L);
+    	procedure2.setArrivalTime(2);
+    	procedure2.setDurationTime(4);
     	
-    	List<ProcessDTO> procedures = new ArrayList<ProcessDTO>();
+    	List<Procedure> procedures = new ArrayList<Procedure>();
     	procedures.add(procedure1);
     	procedures.add(procedure2);
     	

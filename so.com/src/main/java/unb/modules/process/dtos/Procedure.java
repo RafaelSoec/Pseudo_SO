@@ -1,9 +1,9 @@
 package unb.modules.process.dtos;
 
-public class ProcessDTO {
+public class Procedure {
 	private Long id;
-	private long arrivalTime;
-	private long durationTime;
+	private int arrivalTime;
+	private int durationTime;
 	
 	public Long getId() {
 		return id;
@@ -11,16 +11,16 @@ public class ProcessDTO {
 	public void setId(Long id) {
 		this.id = id;
 	}
-	public long getArrivalTime() {
+	public int getArrivalTime() {
 		return arrivalTime;
 	}
-	public void setArrivalTime(long arrivalTime) {
+	public void setArrivalTime(int arrivalTime) {
 		this.arrivalTime = arrivalTime;
 	}
-	public long getDurationTime() {
+	public int getDurationTime() {
 		return durationTime;
 	}
-	public void setDurationTime(long durationTime) {
+	public void setDurationTime(int durationTime) {
 		this.durationTime = durationTime;
 	}
 }
