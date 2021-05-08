@@ -8,9 +8,7 @@
   <artifactId>so.com</artifactId>
   <version>0.0.1-SNAPSHOT</version>
 
-  <name>so.com</name>
-  <!-- FIXME change it to the project's website -->
-  <url>http://www.example.com</url>
+  <name>PSEUDO_SO</name>
 
   <properties>
     <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>

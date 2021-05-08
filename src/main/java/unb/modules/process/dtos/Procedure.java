@@ -5,6 +5,16 @@ public class Procedure {
 	private int arrivalTime;
 	private int durationTime;
 	
+	public Procedure() {
+		
+	}
+	
+	public Procedure(Procedure proc) {
+		this.id = proc.getId();
+		this.arrivalTime = proc.getArrivalTime();
+		this.durationTime = proc.getDurationTime();
+	}
+	
 	public Long getId() {
 		return id;
 	}
