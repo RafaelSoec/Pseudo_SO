@@ -36,7 +36,7 @@ public class AlgorithmFIFO extends AbstractSchedulingAlgorithm {
 		}
 
 		ResultSchedullingProcess result = new ResultSchedullingProcess();
-		result = super.calculateAverageResults(procedureList, procedures);
+		result = super.calculateAverageResults(procedureList, procedures, SchedullingAlgorithmEnum.FIFO);
 
 		super.generateResultSchedullingFileAlgorithm(procedureList, SchedullingAlgorithmEnum.FIFO);
 

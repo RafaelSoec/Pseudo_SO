@@ -10,6 +10,7 @@ import unb.modules.process.dtos.ResultSchedullingProcess;
 import unb.modules.process.enums.SchedullingAlgorithmEnum;
 import unb.modules.process.utils.ProcessComparatorArrival;
 import unb.modules.process.utils.ProcessComparatorDuration;
+import unb.modules.process.utils.ProcessComparatorDurationAndArrival;
 
 //SJF: Shortest Job First
 public class AlgorithmSJF extends AbstractSchedulingAlgorithm {
@@ -24,7 +25,7 @@ public class AlgorithmSJF extends AbstractSchedulingAlgorithm {
 		procedureList = this.createExecutionList(proceduresAux);
 		
 		ResultSchedullingProcess result = new ResultSchedullingProcess();
-		result = super.calculateAverageResults(procedureList, procedures);
+		result = super.calculateAverageResults(procedureList, procedures, SchedullingAlgorithmEnum.SJF);
 		
 		super.generateResultSchedullingFileAlgorithm(procedureList, SchedullingAlgorithmEnum.SJF);
 
@@ -33,30 +34,37 @@ public class AlgorithmSJF extends AbstractSchedulingAlgorithm {
 
 	@Override
 	public ResultSchedullingProcess nonPreemptiveExecution(List<Procedure> procedures) {
+		// Sortear processos pelo tempo de chegada e duracao
+		Collections.sort(procedures, new ProcessComparatorDurationAndArrival());
 
-		List<ResultSchedullingProcess> results = super.generateResultsList(procedures);
-
-		Double waitTime = 0D;
-		Double executionTime = 0D;
-		Double responseTime = 0D;
+		List<Long> procedureList = new ArrayList<Long>();
+		List<Procedure> proceduresAux = super.generateProcedureListAux(procedures);
+		
+		if(!proceduresAux.isEmpty()) {
+			Procedure proc = proceduresAux.get(0);
+			int durationTime = proc.getDurationTime();
+			
+			while(durationTime > 0) {
+				procedureList.add(proc.getId());
+				durationTime--;
+			}
+			proceduresAux.remove(0);
+		}
+		
 		// Sortear processos pelo tempo de duração
-		Collections.sort(procedures, new ProcessComparatorArrival());
-		for (int i = 0; i < procedures.size(); i++) {
-			int timeLeft = procedures.get(i).getDurationTime();
-			// verifica se o processo foi completamente executado
-			while (timeLeft > 0) {
-				executionTime++;
-				responseTime++;
-
-				results.get(i).setExecutionTime(executionTime);
-				results.get(i).setWaitTime(waitTime);
-				results.get(i).setResponseTime(waitTime + procedures.get(i).getDurationTime());
-//				System.out.println("Executing process: " + procedures.get(i).getId());
-				timeLeft--;
+		Collections.sort(proceduresAux, new ProcessComparatorDuration());
+		
+		for (Procedure proced : proceduresAux) {
+			int durationTime = proced.getDurationTime();
+			while(durationTime > 0) {
+				procedureList.add(proced.getId());
+				durationTime--;
 			}
 		}
 
 		ResultSchedullingProcess result = new ResultSchedullingProcess();
+		result = super.calculateAverageResults(procedureList, procedures, SchedullingAlgorithmEnum.SJF);
+		super.generateResultSchedullingFileAlgorithm(procedureList, SchedullingAlgorithmEnum.SJF);
 
 		return result;
 	}

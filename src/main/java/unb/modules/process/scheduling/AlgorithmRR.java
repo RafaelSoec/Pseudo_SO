@@ -15,9 +15,13 @@ import unb.modules.process.utils.ProcessComparatorArrival;
 public class AlgorithmRR extends AbstractSchedulingAlgorithm {
 	private final static Integer QUANTUM = 2;
 
-
 	@Override
 	public ResultSchedullingProcess preemptiveExecution(List<Procedure> procedures) {
+		// No round Robin o tempo de chegada é zero pra todos processos
+		for(Procedure proc : procedures) {
+			proc.setArrivalTime(0);
+		}
+		
 		// Sortear processos pelo tempo de chegada
 		Collections.sort(procedures, new ProcessComparatorArrival());
 
@@ -25,10 +29,10 @@ public class AlgorithmRR extends AbstractSchedulingAlgorithm {
 		List<Procedure> proceduresAux = super.generateProcedureListAux(procedures);
 		List<Long> procedureList = new ArrayList<Long>();
 		this.executeLoop(proceduresAux, procedureList);
-		
+
 		ResultSchedullingProcess result = new ResultSchedullingProcess();
-		result = super.calculateAverageResults(procedureList, procedures);
-		
+		result = super.calculateAverageResults(procedureList, procedures, SchedullingAlgorithmEnum.ROUND_ROBIN);
+
 		super.generateResultSchedullingFileAlgorithm(procedureList, SchedullingAlgorithmEnum.ROUND_ROBIN);
 
 		return result;
@@ -41,12 +45,13 @@ public class AlgorithmRR extends AbstractSchedulingAlgorithm {
 	}
 
 	private void executeLoop(List<Procedure> proceduresAux, List<Long> results) {
-		
+		List<Integer> removedItems = new ArrayList<Integer>();
+
 		for (int i = 0; i < proceduresAux.size(); i++) {
 //			if (proceduresAux.get(i).getDurationTime() > 0) {
 //				System.out.println("Executing process: " + proceduresAux.get(i).getId());
 //			}
-			
+
 			// executar processos pelo quantum definido
 			for (int j = 0; j < QUANTUM; j++) {
 				int timeLeft = proceduresAux.get(i).getDurationTime();
@@ -57,11 +62,16 @@ public class AlgorithmRR extends AbstractSchedulingAlgorithm {
 //					System.out.println("Time to complete: " + timeLeft);
 					results.add(proceduresAux.get(i).getId());
 				} else {
-					// remover processos executados
-					proceduresAux.remove(i);
 					j = QUANTUM;
+					removedItems.add(i);
 				}
 			}
+		}
+
+		// remover processos executados
+		Collections.reverse(removedItems);
+		for (int item : removedItems) {
+			proceduresAux.remove(item);
 		}
 
 		while (!proceduresAux.isEmpty()) {

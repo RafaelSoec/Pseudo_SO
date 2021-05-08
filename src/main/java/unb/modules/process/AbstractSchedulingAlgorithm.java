@@ -8,6 +8,7 @@ import unb.modules.process.dtos.ResultSchedullingProcess;
 import unb.modules.process.enums.SchedullingAlgorithmEnum;
 import unb.modules.process.interfaces.SchedulingAlgorithm;
 import unb.utils.ManagerFile;
+import unb.utils.MathUtils;
 
 public abstract class AbstractSchedulingAlgorithm implements SchedulingAlgorithm {
 
@@ -25,7 +26,8 @@ public abstract class AbstractSchedulingAlgorithm implements SchedulingAlgorithm
 		return results;
 	}
 
-	protected ResultSchedullingProcess calculateAverageResults(List<Long> procedureList, List<Procedure> procedures) {
+	protected ResultSchedullingProcess calculateAverageResults(List<Long> procedureList, List<Procedure> procedures,
+			SchedullingAlgorithmEnum alg) {
 		List<ResultSchedullingProcess> listAverageResult = new ArrayList<ResultSchedullingProcess>();
 
 		Double executionTime = 0D;
@@ -38,27 +40,37 @@ public abstract class AbstractSchedulingAlgorithm implements SchedulingAlgorithm
 			waitTime = 0D;
 
 			for (int i = 0; i < procedureList.size(); i++) {
+				if (alg.equals(SchedullingAlgorithmEnum.ROUND_ROBIN)) {
+					if (i >= proc.getArrivalTime() && cont < proc.getDurationTime()) {
+						executionTime++;
+					}
+				}
+
 				if (procedureList.get(i) == proc.getId()) {
 					// marcar a espera por atraso na iniciação da execuçao
 					// essa condição só deve ser satisfeita uma vez
 					if (executionTime <= 0 && i > proc.getArrivalTime()) {
 						responseTime = Double.valueOf(i - proc.getArrivalTime());
+						waitTime += responseTime;
 					}
 
-					// ativar contagem
-					if (cont < proc.getDurationTime()) {
-						executionTime++;
+//					// ativar contagem
+					if (!alg.equals(SchedullingAlgorithmEnum.ROUND_ROBIN)) {
+						if (cont < proc.getDurationTime()) {
+							executionTime++;
+						}
 					}
 					cont++;
 				} else {
 					if ((executionTime > 0 && cont < proc.getDurationTime())) {
-						executionTime++;
+						if (!alg.equals(SchedullingAlgorithmEnum.ROUND_ROBIN)) {
+							executionTime++;
+						}
 						waitTime++;
 					}
 				}
 			}
 
-			waitTime += responseTime;
 			ResultSchedullingProcess averageResult = new ResultSchedullingProcess();
 			averageResult.setExecutionTime(executionTime);
 			averageResult.setResponseTime(responseTime);
@@ -76,10 +88,12 @@ public abstract class AbstractSchedulingAlgorithm implements SchedulingAlgorithm
 			waitTime += result.getWaitTime();
 		}
 
+		// limitar em duas casas decimais
+
 		ResultSchedullingProcess averageResult = new ResultSchedullingProcess();
-		averageResult.setExecutionTime(executionTime / procedures.size());
-		averageResult.setResponseTime(responseTime / procedures.size());
-		averageResult.setWaitTime(waitTime / procedures.size());
+		averageResult.setExecutionTime(MathUtils.round((executionTime / procedures.size()), 2));
+		averageResult.setResponseTime(MathUtils.round((responseTime / procedures.size()), 2));
+		averageResult.setWaitTime(MathUtils.round((waitTime / procedures.size()), 2));
 
 		return averageResult;
 	}
@@ -144,7 +158,7 @@ public abstract class AbstractSchedulingAlgorithm implements SchedulingAlgorithm
 				}
 
 				results.append("Rodar processo de [").append(procedureList.get(j)).append("] de [").append(j)
-						.append("] ate [").append(j + cont).append("]").append("\n");
+						.append("] ate [").append(j + cont + 1).append("]").append("\n");
 			}
 		}
 

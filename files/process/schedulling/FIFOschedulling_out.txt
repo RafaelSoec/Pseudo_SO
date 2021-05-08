@@ -1,6 +1,6 @@
 FIFO
 
-Rodar processo de [1] de [0] ate [7]
-Rodar processo de [2] de [8] ate [12]
-Rodar processo de [3] de [13] ate [13]
-Rodar processo de [4] de [14] ate [17]
+Rodar processo de [0] de [0] ate [20]
+Rodar processo de [1] de [20] ate [30]
+Rodar processo de [2] de [30] ate [36]
+Rodar processo de [3] de [36] ate [44]

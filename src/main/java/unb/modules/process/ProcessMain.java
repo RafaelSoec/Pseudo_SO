@@ -41,15 +41,15 @@ public class ProcessMain {
 //		System.out.println("\nTime of Execution Round Robin: " + algorithmRR.execute(this.process));
 
 		StringBuilder results = new StringBuilder();
-		ResultSchedullingProcess resultFF = algorithmFF.nonPreemptiveExecution(this.process);
-		results.append(this.generateStringResultSchedulling("FIFO", resultFF));
+//		ResultSchedullingProcess resultFF = algorithmFF.nonPreemptiveExecution(this.process);
+//		results.append(this.generateStringResultSchedulling("FIFO", resultFF));
 		
-		ResultSchedullingProcess resultSJF = algorithmSJF.preemptiveExecution(this.process);
+		ResultSchedullingProcess resultSJF = algorithmSJF.nonPreemptiveExecution(this.process);
 		results.append(this.generateStringResultSchedulling("SJF", resultSJF));
 		
-		ResultSchedullingProcess resultRR = algorithmRR.preemptiveExecution(this.process);
-		results.append(this.generateStringResultSchedulling("RR", resultRR));
-		
+//		ResultSchedullingProcess resultRR = algorithmRR.preemptiveExecution(this.process);
+//		results.append(this.generateStringResultSchedulling("RR", resultRR));
+//		
 		this.generateResultFileSchedulling(results.toString());
 	}
 
