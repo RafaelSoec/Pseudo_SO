@@ -31,7 +31,7 @@ public class AlgorithmRR extends AbstractSchedulingAlgorithm {
 		this.executeLoop(proceduresAux, procedureList);
 
 		ResultSchedullingProcess result = new ResultSchedullingProcess();
-		result = super.calculateAverageResults(procedureList, procedures, SchedullingAlgorithmEnum.ROUND_ROBIN);
+		result = this.calculateAverageResults(procedureList, procedures);
 
 		super.generateResultSchedullingFileAlgorithm(procedureList, SchedullingAlgorithmEnum.ROUND_ROBIN);
 
@@ -77,6 +77,12 @@ public class AlgorithmRR extends AbstractSchedulingAlgorithm {
 		while (!proceduresAux.isEmpty()) {
 			this.executeLoop(proceduresAux, results);
 		}
+	}
+
+	@Override
+	public ResultSchedullingProcess calculateAverageResults(List<Long> procedureList, List<Procedure> procedures) {
+		// TODO Auto-generated method stub
+		return null;
 	}
 
 }

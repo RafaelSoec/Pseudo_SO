@@ -11,6 +11,7 @@ import unb.modules.process.enums.SchedullingAlgorithmEnum;
 import unb.modules.process.utils.ProcessComparatorArrival;
 import unb.modules.process.utils.ProcessComparatorDuration;
 import unb.modules.process.utils.ProcessComparatorDurationAndArrival;
+import unb.utils.MathUtils;
 
 //SJF: Shortest Job First
 public class AlgorithmSJF extends AbstractSchedulingAlgorithm {
@@ -25,7 +26,7 @@ public class AlgorithmSJF extends AbstractSchedulingAlgorithm {
 		procedureList = this.createExecutionList(proceduresAux);
 		
 		ResultSchedullingProcess result = new ResultSchedullingProcess();
-		result = super.calculateAverageResults(procedureList, procedures, SchedullingAlgorithmEnum.SJF);
+		result = this.calculateAverageResults(procedureList, procedures);
 		
 		super.generateResultSchedullingFileAlgorithm(procedureList, SchedullingAlgorithmEnum.SJF);
 
@@ -63,7 +64,7 @@ public class AlgorithmSJF extends AbstractSchedulingAlgorithm {
 		}
 
 		ResultSchedullingProcess result = new ResultSchedullingProcess();
-		result = super.calculateAverageResults(procedureList, procedures, SchedullingAlgorithmEnum.SJF);
+		result = this.calculateAverageResults(procedureList, procedures);
 		super.generateResultSchedullingFileAlgorithm(procedureList, SchedullingAlgorithmEnum.SJF);
 
 		return result;
@@ -121,5 +122,49 @@ public class AlgorithmSJF extends AbstractSchedulingAlgorithm {
 		}
 
 		return procedureList;
+	}
+
+	@Override
+	public ResultSchedullingProcess calculateAverageResults(List<Long> procedureList, List<Procedure> procedures) {
+		List<ResultSchedullingProcess> listAverageResult = new ArrayList<ResultSchedullingProcess>();
+
+		// Sortear processos pelo tempo de chegada e duracao
+		Collections.sort(procedures, new ProcessComparatorDurationAndArrival());
+
+		Double executionTime = 0D;
+		Double responseTime = 0D;
+		Double waitTime = 0D;
+		for(Procedure proc : procedures) {
+			int durationTime = proc.getDurationTime();
+			int arrivalTime = proc.getArrivalTime();
+
+			waitTime = executionTime - durationTime;
+			executionTime = executionTime + durationTime;
+
+			waitTime = waitTime < 0D ? 0 : waitTime;
+			executionTime = executionTime < 0D ? 0 : executionTime;
+			
+			ResultSchedullingProcess averageResult = new ResultSchedullingProcess();
+			averageResult.setExecutionTime(executionTime - arrivalTime);
+			averageResult.setResponseTime(responseTime);
+			averageResult.setWaitTime(waitTime);
+			
+			listAverageResult.add(averageResult);
+		}
+
+		waitTime = 0D;
+		responseTime = 0D;
+		executionTime = 0D;
+		for(ResultSchedullingProcess res : listAverageResult) {
+			executionTime += res.getExecutionTime();
+		}
+
+		int max = listAverageResult.size();
+		ResultSchedullingProcess averageResult = new ResultSchedullingProcess();
+		averageResult.setExecutionTime(MathUtils.round((executionTime/max), 2));
+		averageResult.setResponseTime(responseTime);
+		averageResult.setWaitTime(waitTime);
+		
+		return averageResult;
 	}
 }
