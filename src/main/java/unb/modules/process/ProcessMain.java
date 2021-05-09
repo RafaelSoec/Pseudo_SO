@@ -7,6 +7,7 @@ import unb.modules.process.dtos.Procedure;
 import unb.modules.process.dtos.ResultSchedullingProcess;
 import unb.modules.process.interfaces.SchedulingAlgorithm;
 import unb.modules.process.scheduling.AlgorithmFIFO;
+import unb.modules.process.scheduling.AlgorithmRR;
 import unb.modules.process.scheduling.AlgorithmSJF;
 import unb.utils.ManagerFile;
 
@@ -28,7 +29,7 @@ public class ProcessMain {
 	}
 
 	public void toSchedullerProcess() {
-//		SchedulingAlgorithm algorithmRR = new AlgorithmRR();
+		SchedulingAlgorithm algorithmRR = new AlgorithmRR();
 		SchedulingAlgorithm algorithmSJF = new AlgorithmSJF();
 		SchedulingAlgorithm algorithmFF = new AlgorithmFIFO();
 
@@ -46,8 +47,8 @@ public class ProcessMain {
 		ResultSchedullingProcess resultSJF = algorithmSJF.nonPreemptiveExecution(this.process);
 		results.append(this.generateStringResultSchedulling("SJF", resultSJF));
 		
-//		ResultSchedullingProcess resultRR = algorithmRR.preemptiveExecution(this.process);
-//		results.append(this.generateStringResultSchedulling("RR", resultRR));
+		ResultSchedullingProcess resultRR = algorithmRR.preemptiveExecution(this.process);
+		results.append(this.generateStringResultSchedulling("RR", resultRR));
 //		
 		this.generateResultFileSchedulling(results.toString());
 	}

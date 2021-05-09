@@ -33,12 +33,11 @@ public class AlgorithmSJF extends AbstractSchedulingAlgorithm {
 
 	@Override
 	public ResultSchedullingProcess nonPreemptiveExecution(List<Procedure> procedures) {
-		// Sortear processos pelo tempo de chegada e duracao
-		Collections.sort(procedures, new ProcessComparatorArrivalAndDuration());
-
 		List<Procedure> procedureList = new ArrayList<Procedure>();
 		List<Procedure> proceduresAux = super.generateProcedureListAux(procedures);
-
+		// Sortear processos pelo tempo de chegada e duracao
+		Collections.sort(proceduresAux, new ProcessComparatorArrivalAndDuration());
+		
 		if (!proceduresAux.isEmpty()) {
 			Procedure proc = proceduresAux.get(0);
 			int durationTime = proc.getDurationTime();

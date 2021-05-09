@@ -27,97 +27,6 @@ public abstract class AbstractSchedulingAlgorithm implements SchedulingAlgorithm
 		return results;
 	}
 
-//	protected ResultSchedullingProcess calculateAverageResults(List<Long> procedureList, List<Procedure> procedures,
-//			SchedullingAlgorithmEnum alg) {
-//		List<ResultSchedullingProcess> listAverageResult = new ArrayList<ResultSchedullingProcess>();
-//
-//		Double executionTime = 0D;
-//		Double responseTime = 0D;
-//		Double waitTime = 0D;
-//		int cont = 0;
-//		for (Procedure proc : procedures) {
-//			executionTime = 0D;
-//			responseTime = 0D;
-//			waitTime = 0D;
-//
-//			for (int i = 0; i < procedureList.size(); i++) {
-//				if (alg.equals(SchedullingAlgorithmEnum.ROUND_ROBIN)) {
-//					if (i >= proc.getArrivalTime() && cont < proc.getDurationTime()) {
-//						executionTime++;
-//					}
-//				}
-//
-//				if (procedureList.get(i) == proc.getId()) {
-//					// marcar a espera por atraso na iniciação da execuçao
-//					// essa condição só deve ser satisfeita uma vez
-//					if (executionTime <= 0 && i > proc.getArrivalTime()) {
-//						responseTime = Double.valueOf(i - proc.getArrivalTime());
-//						waitTime += responseTime;
-//					}
-//
-////					// ativar contagem
-//					if (!alg.equals(SchedullingAlgorithmEnum.ROUND_ROBIN)) {
-//						if (cont < proc.getDurationTime()) {
-//							executionTime++;
-//						}
-//					}
-//					cont++;
-//				} else {
-//					if ((executionTime > 0 && cont < proc.getDurationTime())) {
-//						if (!alg.equals(SchedullingAlgorithmEnum.ROUND_ROBIN)) {
-//							executionTime++;
-//						}
-//						waitTime++;
-//					}
-//				}
-//			}
-//
-//			ResultSchedullingProcess averageResult = new ResultSchedullingProcess();
-//			averageResult.setExecutionTime(executionTime);
-//			averageResult.setResponseTime(responseTime);
-//			averageResult.setWaitTime(waitTime);
-//			listAverageResult.add(averageResult);
-//			cont = 0;
-//		}
-//
-//		executionTime = 0D;
-//		responseTime = 0D;
-//		waitTime = 0D;
-//		for (ResultSchedullingProcess result : listAverageResult) {
-//			executionTime += result.getExecutionTime();
-//			responseTime += result.getResponseTime();
-//			waitTime += result.getWaitTime();
-//		}
-//
-//		// limitar em duas casas decimais
-//
-//		ResultSchedullingProcess averageResult = new ResultSchedullingProcess();
-//		averageResult.setExecutionTime(MathUtils.round((executionTime / procedures.size()), 2));
-//		averageResult.setResponseTime(MathUtils.round((responseTime / procedures.size()), 2));
-//		averageResult.setWaitTime(MathUtils.round((waitTime / procedures.size()), 2));
-//
-//		return averageResult;
-//	}
-
-//	protected ResultSchedullingProcess calculateAverageResults(List<ResultSchedullingProcess> results) {
-//		ResultSchedullingProcess averageResult = new ResultSchedullingProcess();
-//
-//		Double waitTime = 0D;
-//		Double responseTime = 0D;
-//		Double executionTime = 0D;
-//		for (ResultSchedullingProcess result : results) {
-//			executionTime += result.getExecutionTime();
-//			responseTime += result.getResponseTime();
-//			waitTime += result.getWaitTime();
-//		}
-//
-//		averageResult.setExecutionTime(executionTime / results.size());
-//		averageResult.setResponseTime(responseTime / results.size());
-//		averageResult.setWaitTime(waitTime / results.size());
-//
-//		return averageResult;
-//	}
-
 	protected List<Procedure> generateProcedureListAux(List<Procedure> procedures) {
 		// Instanciar uma lista de processos auxiliar
 		List<Procedure> proceduresAux = new ArrayList<Procedure>();
@@ -171,10 +80,11 @@ public abstract class AbstractSchedulingAlgorithm implements SchedulingAlgorithm
 		List<ResultSchedullingProcess> listAverageResult = new ArrayList<ResultSchedullingProcess>();
 		List<Long> proceduresActives = new ArrayList<Long>();
 
+		System.out.print("Diagrama de Gant: [ ");
 		for (Procedure proc : procedureList) {
 			System.out.print(proc.getId() + " ");
 		}
-		System.out.print("\n");
+		System.out.print("]\n\n");
 		
 		Double executionTime = 0D;
 		Double responseTime = 0D;
@@ -184,20 +94,22 @@ public abstract class AbstractSchedulingAlgorithm implements SchedulingAlgorithm
 			int indexObj = proceduresActives.indexOf(proc.getId());
 			// Verifica se o processo já esta na lista de processos
 			if (indexObj >= 0) {
+				ResultSchedullingProcess res = listAverageResult.get(indexObj);
+				executionTime = res.getExecutionTime();
+				waitTime = res.getWaitTime();
 				// verifica se o processo esta sendo executado sequencialmente,
 				// caso não esteja, isso indica que o processo já foi executado anteriormente
 				int prevIndex = i - 1;
 				if (prevIndex >= 0) {
 					Procedure prevProc = procedureList.get(prevIndex);
 					while (prevIndex >= 0 && prevProc.getId() != proc.getId()) {
+						executionTime++;
 						waitTime++;
 						prevIndex--;
 						prevProc = procedureList.get(prevIndex);
 					}
 				}
 
-				ResultSchedullingProcess res = listAverageResult.get(indexObj);
-				executionTime = res.getExecutionTime();
 				executionTime++;
 				res.setExecutionTime(executionTime);
 				res.setWaitTime(waitTime);
