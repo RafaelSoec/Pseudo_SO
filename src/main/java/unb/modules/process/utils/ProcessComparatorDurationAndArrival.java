@@ -6,6 +6,10 @@ import unb.modules.process.dtos.Procedure;
 
 public class ProcessComparatorDurationAndArrival implements Comparator<Procedure>{
     public int compare(Procedure a, Procedure b){
-        return a.getArrivalTime() - b.getArrivalTime() + a.getDurationTime() - b.getDurationTime();
+    	if(a.getDurationTime() - b.getDurationTime() == 0) {
+            return a.getArrivalTime() - b.getArrivalTime() ;
+    	}
+
+        return a.getDurationTime() - b.getDurationTime();
     }
 }
