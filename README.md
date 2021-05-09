@@ -9,7 +9,7 @@
   
 
 
-#### Implementação de um pseudo-SO multiprogramado, composto por um Gerenciador de Processos,
+Implementação de um pseudo-SO multiprogramado, composto por um Gerenciador de Processos,
 por um Gerenciador de Memória e por um Gerenciador de Entrada/Saída. O gerenciador de processos
 deve ser capaz de aplicar o algoritmo de escalonamento definido por meio de parâmetro pelo usuário do SO.
 O gerenciador de memória deve garantir que um processo não acesse as regiões de memória de um outro
