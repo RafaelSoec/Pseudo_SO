@@ -1,13 +1,11 @@
 package unb.modules.process.enums;
 
-public enum SchedullingAlgorithmEnum {
-	FIFO("FIFO"),
-	SJF("SJF"),
-	SJF_P("SJF PREEMPTIVE"),
-	ROUND_ROBIN("RR");
+public enum TypeSchedullingAlgorithmEnum {
+	NON_PREEMPTIVE("NON_PREEMPTIVE"),
+	PREEMPTIVE("PREEMPTIVE");
 
 	private String name;
-	SchedullingAlgorithmEnum(String name) {
+	TypeSchedullingAlgorithmEnum(String name) {
 		this.setName(name);
 	}
 	

@@ -5,6 +5,8 @@ import java.util.List;
 
 import unb.modules.process.dtos.Procedure;
 import unb.modules.process.dtos.ResultSchedullingProcess;
+import unb.modules.process.enums.SchedullingAlgorithmEnum;
+import unb.modules.process.enums.TypeSchedullingAlgorithmEnum;
 import unb.modules.process.interfaces.SchedulingAlgorithm;
 import unb.modules.process.scheduling.AlgorithmFIFO;
 import unb.modules.process.scheduling.AlgorithmRR;
@@ -33,30 +35,26 @@ public class ProcessMain {
 		SchedulingAlgorithm algorithmSJF = new AlgorithmSJF();
 		SchedulingAlgorithm algorithmFF = new AlgorithmFIFO();
 
-//		System.out.println("\nExecution FIFO \n");
-//		System.out.println("\nTime of Execution FIFO: " + algorithmFF.execute(this.process));
-//		System.out.println("\nExecution SJF \n");
-//		System.out.println("\nTime of Execution SJF: " + algorithmSJF.execute(this.process));
-//		System.out.println("\nExecution Round Robin \n");
-//		System.out.println("\nTime of Execution Round Robin: " + algorithmRR.execute(this.process));
-
 		StringBuilder results = new StringBuilder();
-		ResultSchedullingProcess resultFF = algorithmFF.nonPreemptiveExecution(this.process);
-		results.append(this.generateStringResultSchedulling("FIFO", resultFF));
+		ResultSchedullingProcess resultFF = algorithmFF.execute(TypeSchedullingAlgorithmEnum.NON_PREEMPTIVE, this.process);
+		results.append(this.generateStringResultSchedulling(SchedullingAlgorithmEnum.FIFO, resultFF));
 		
-		ResultSchedullingProcess resultSJF = algorithmSJF.nonPreemptiveExecution(this.process);
-		results.append(this.generateStringResultSchedulling("SJF", resultSJF));
+		ResultSchedullingProcess resultSJF = algorithmSJF.execute(TypeSchedullingAlgorithmEnum.NON_PREEMPTIVE, this.process);
+		results.append(this.generateStringResultSchedulling(SchedullingAlgorithmEnum.SJF, resultSJF));
+
+		ResultSchedullingProcess resultSJFP = algorithmSJF.execute(TypeSchedullingAlgorithmEnum.PREEMPTIVE, this.process);
+		results.append(this.generateStringResultSchedulling(SchedullingAlgorithmEnum.SJF_P, resultSJFP));
 		
-		ResultSchedullingProcess resultRR = algorithmRR.preemptiveExecution(this.process);
-		results.append(this.generateStringResultSchedulling("RR", resultRR));
+		ResultSchedullingProcess resultRR = algorithmRR.execute(TypeSchedullingAlgorithmEnum.PREEMPTIVE, this.process);
+		results.append(this.generateStringResultSchedulling(SchedullingAlgorithmEnum.ROUND_ROBIN, resultRR));
 //		
 		this.generateResultFileSchedulling(results.toString());
 	}
 
-	private String generateStringResultSchedulling(final String algorithm, final ResultSchedullingProcess resultAlgorithm) {
+	private String generateStringResultSchedulling(final SchedullingAlgorithmEnum algorithm, final ResultSchedullingProcess resultAlgorithm) {
 		StringBuilder results = new StringBuilder();
 
-		results.append(algorithm).append(" ")
+		results.append(algorithm.getName()).append(" ")
 				.append(resultAlgorithm.getExecutionTime()).append(" ")
 				.append(resultAlgorithm.getResponseTime()).append(" ")
 				.append(resultAlgorithm.getWaitTime())

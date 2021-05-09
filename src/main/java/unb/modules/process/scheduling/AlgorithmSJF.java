@@ -8,25 +8,24 @@ import unb.modules.process.AbstractSchedulingAlgorithm;
 import unb.modules.process.dtos.Procedure;
 import unb.modules.process.dtos.ResultSchedullingProcess;
 import unb.modules.process.enums.SchedullingAlgorithmEnum;
+import unb.modules.process.utils.ProcessComparatorArrival;
 import unb.modules.process.utils.ProcessComparatorArrivalAndDuration;
 import unb.modules.process.utils.ProcessComparatorDuration;
+import unb.modules.process.utils.ProcessComparatorDurationAndArrival;
 
 //SJF: Shortest Job First
 public class AlgorithmSJF extends AbstractSchedulingAlgorithm {
 
 	@Override
 	public ResultSchedullingProcess preemptiveExecution(List<Procedure> procedures) {
-		// Sortear processos pelo tempo de duração
-		Collections.sort(procedures, new ProcessComparatorArrivalAndDuration());
 
-		List<Long> procedureList = new ArrayList<Long>();
-		List<Procedure> proceduresAux = super.generateProcedureListAux(procedures);
-		procedureList = this.createExecutionList(proceduresAux);
+		List<Procedure> procedureList = new ArrayList<Procedure>();
+		procedureList = this.createExecutionList(procedures);
 
 		ResultSchedullingProcess result = new ResultSchedullingProcess();
-//		result = this.calculateAverageResults(procedureList);
+		result = this.calculateAverageResults(procedureList);
 
-//		super.generateResultSchedullingFileAlgorithm(procedureList, SchedullingAlgorithmEnum.SJF);
+		super.generateResultSchedullingFileAlgorithm(procedureList, SchedullingAlgorithmEnum.SJF);
 
 		return result;
 	}
@@ -67,60 +66,80 @@ public class AlgorithmSJF extends AbstractSchedulingAlgorithm {
 		return result;
 	}
 
-	private List<Long> createExecutionList(List<Procedure> procedures) {
-		List<Long> procedureList = new ArrayList<Long>();
+	private List<Procedure> createExecutionList(List<Procedure> procedures) {
+		List<Procedure> procedureList = new ArrayList<Procedure>();
 
+		// Sortear processos pelo tempo de duração
+		Collections.sort(procedures, new ProcessComparatorArrival());
+		List<Procedure> proceduresAux = super.generateProcedureListAux(procedures);
+		
 		int actualIndex = 0;
-		while (!procedures.isEmpty()) {
+		while (!proceduresAux.isEmpty()) {
 			int nextIndex = actualIndex + 1;
-			Procedure actualProc = procedures.get(actualIndex);
+			Procedure actualProc = proceduresAux.get(actualIndex);
 
 			int durationTime = actualProc.getDurationTime();
 			// Executa o ultimo processo até o final
-			if (procedures.size() == 1) {
+			if (proceduresAux.size() == 1) {
 				while (durationTime > 0) {
-					procedureList.add(actualProc.getId());
+					procedureList.add(actualProc);
 					durationTime--;
 				}
-				procedures.remove(actualIndex);
+				proceduresAux.remove(actualIndex);
 			}
 
 			// Executa um processo até que atinja o tempo de chegada de outro processo
 			// ou até que finalize o processo
-			if (nextIndex < procedures.size()) {
-				Procedure nextProc = procedures.get(nextIndex);
+			if (nextIndex < proceduresAux.size()) {
+				Procedure nextProc = proceduresAux.get(nextIndex);
 				// A execução maxima entre um processo e outro é definido pelo seu tempo de
 				// execução
 				// ou a diferença entre os tempos de chegadas do processo atual e o proximo
 				// processo
 				int maxDesloc = nextProc.getArrivalTime() - actualProc.getArrivalTime();
-				maxDesloc = (maxDesloc < 0 || durationTime < maxDesloc) ? durationTime : maxDesloc;
+				
+				// restam dois componnentes na lista que chegaram ao mesmo tempo
+				if(maxDesloc == 0 && proceduresAux.size() > 2) {
+					maxDesloc = durationTime;
+				}else {
+					maxDesloc = (maxDesloc < 0 || durationTime < maxDesloc) ? durationTime : maxDesloc;
+				}
 				for (int j = 0; j < maxDesloc; j++) {
 					durationTime--;
 					// Executa o processo até o seu tempo de duração e depois o remove da fila
 					if (durationTime <= 0) {
-						procedures.remove(actualIndex);
+						proceduresAux.remove(actualIndex);
 						durationTime = 0;
 					}
 
 					actualProc.setDurationTime(durationTime);
-					procedureList.add(actualProc.getId());
+					procedureList.add(actualProc);
 				}
 
 				actualIndex++;
 				// Evita erros de indices no array
-				if (actualIndex >= procedures.size()) {
+				if (actualIndex >= proceduresAux.size()) {
 					actualIndex = 0;
 					// ordenar a lista por tempo de chegada
-					Collections.sort(procedures, new ProcessComparatorDuration());
+					Collections.sort(proceduresAux, new ProcessComparatorDurationAndArrival());
 				}
 
 			} else {
 				actualIndex = 0;
 			}
 		}
+		
+		List<Procedure> newProcedureList = new ArrayList<Procedure>();
+		// recuperar valores que são atualizados no processo de escalonamennto
+		for (Procedure proc : procedureList) {
+			for (Procedure proc2 : procedures) {
+				if(proc2.getId() == proc.getId()) {
+					newProcedureList.add(proc2);
+					break;
+				}
+			}
+		}
 
-		return procedureList;
+		return newProcedureList;
 	}
-
 }

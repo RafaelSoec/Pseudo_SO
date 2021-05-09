@@ -6,16 +6,23 @@ import java.util.List;
 import unb.modules.process.dtos.Procedure;
 import unb.modules.process.dtos.ResultSchedullingProcess;
 import unb.modules.process.enums.SchedullingAlgorithmEnum;
+import unb.modules.process.enums.TypeSchedullingAlgorithmEnum;
 import unb.modules.process.interfaces.SchedulingAlgorithm;
 import unb.utils.ManagerFile;
 import unb.utils.MathUtils;
 
 public abstract class AbstractSchedulingAlgorithm implements SchedulingAlgorithm {
-//	public abstract ResultSchedullingProcess calculateAverageResults(List<Procedure> procedureList);
-	
 	public abstract ResultSchedullingProcess preemptiveExecution(List<Procedure> procedures);
 
 	public abstract ResultSchedullingProcess nonPreemptiveExecution(List<Procedure> procedures);
+
+	public ResultSchedullingProcess execute(TypeSchedullingAlgorithmEnum type, List<Procedure> procedures) {
+		if(TypeSchedullingAlgorithmEnum.NON_PREEMPTIVE.equals(type)) {
+			return this.nonPreemptiveExecution(procedures);
+		}else {
+			return this.preemptiveExecution(procedures);
+		}
+	}
 
 	protected List<ResultSchedullingProcess> generateResultsList(List<Procedure> procedures) {
 		List<ResultSchedullingProcess> results = new ArrayList<ResultSchedullingProcess>();

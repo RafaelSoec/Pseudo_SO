@@ -16,6 +16,7 @@ import unb.utils.ManagerQueue;
 public class AlgorithmRR extends AbstractSchedulingAlgorithm {
 	private final static Integer QUANTUM = 2;
 
+
 	@Override
 	public ResultSchedullingProcess preemptiveExecution(List<Procedure> procedures) {
 		

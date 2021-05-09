@@ -3,8 +3,6 @@ package unb.utils;
 import java.util.ArrayList;
 import java.util.List;
 
-import unb.modules.process.scheduling.readyQueue;
-
 public class ManagerQueue<T> {
 	private List<T> queue = new ArrayList<T>();
 
