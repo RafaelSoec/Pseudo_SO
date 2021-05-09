@@ -5,20 +5,22 @@ import java.util.List;
 
 import unb.modules.process.ProcessMain;
 import unb.modules.process.dtos.Procedure;
+import unb.modules.process.enums.TypeSchedullingAlgorithmEnum;
 import unb.utils.ManagerFile;
 
 /**
  */
 public class App {
     public static void main( String[] args ){
-		String path = "files/process";
 		String nameFile = "schedulling_process_in.txt";
 		
-        toSchedullerProcess(path, nameFile);
+        toSchedullerProcess("FIFO", nameFile);
     }
     
     
-    public static void toSchedullerProcess(final String path, final String nameFile){
+    public static void toSchedullerProcess(final String algorithm, final String nameFile){
+		String path = "files/process";
+		
     	List<Procedure> procedures = new ArrayList<Procedure>();
 		String text = ManagerFile.readFile(path, nameFile);
 		String[] lines = text.split("\n");
@@ -42,7 +44,13 @@ public class App {
 			}
 		}
 		
+		TypeSchedullingAlgorithmEnum typeExec = TypeSchedullingAlgorithmEnum.NON_PREEMPTIVE;
+		if(algorithm.contains("PREEMPTIVE")) {
+			typeExec = TypeSchedullingAlgorithmEnum.PREEMPTIVE;
+		}
+		
         ProcessMain processManager = new ProcessMain(procedures);
-        processManager.toSchedullerProcess();
+//        processManager.toSchedullerProcessWithAllAlgorithms();
+        processManager.toSchedullerProcess(algorithm, typeExec);
     }
 }

@@ -30,39 +30,69 @@ public class ProcessMain {
 		this.process = process;
 	}
 
-	public void toSchedullerProcess() {
+	public void toSchedullerProcess(String typeAlgh, TypeSchedullingAlgorithmEnum typeExec) {
+		SchedullingAlgorithmEnum type = null;
+		SchedulingAlgorithm algorithm = null;
+
+		if (typeAlgh.equals(SchedullingAlgorithmEnum.FIFO.getName())) {
+			type = SchedullingAlgorithmEnum.FIFO;
+			algorithm = new AlgorithmFIFO();
+		} else if (typeAlgh.equals(SchedullingAlgorithmEnum.SJF.getName())) {
+			type = SchedullingAlgorithmEnum.SJF;
+			algorithm = new AlgorithmSJF();
+		} else if (typeAlgh.equals(SchedullingAlgorithmEnum.SJF_P.getName())) {
+			type = SchedullingAlgorithmEnum.SJF_P;
+			algorithm = new AlgorithmSJF();
+		} else if (typeAlgh.equals(SchedullingAlgorithmEnum.ROUND_ROBIN.getName())) {
+			type = SchedullingAlgorithmEnum.ROUND_ROBIN;
+			algorithm = new AlgorithmRR();
+		} else {
+			type = SchedullingAlgorithmEnum.FIFO;
+			algorithm = new AlgorithmFIFO();
+		}
+
+		StringBuilder results = new StringBuilder();
+		ResultSchedullingProcess resultRR = algorithm.execute(typeExec, this.process);
+		results.append(this.generateStringResultSchedulling(type, resultRR));
+//		
+		this.generateResultFileSchedulling(results.toString());
+	}
+
+	public void toSchedullerProcessWithAllAlgorithms() {
 		SchedulingAlgorithm algorithmRR = new AlgorithmRR();
 		SchedulingAlgorithm algorithmSJF = new AlgorithmSJF();
 		SchedulingAlgorithm algorithmFF = new AlgorithmFIFO();
 
 		StringBuilder results = new StringBuilder();
-		ResultSchedullingProcess resultFF = algorithmFF.execute(TypeSchedullingAlgorithmEnum.NON_PREEMPTIVE, this.process);
+		ResultSchedullingProcess resultFF = algorithmFF.execute(TypeSchedullingAlgorithmEnum.NON_PREEMPTIVE,
+				this.process);
 		results.append(this.generateStringResultSchedulling(SchedullingAlgorithmEnum.FIFO, resultFF));
-		
-		ResultSchedullingProcess resultSJF = algorithmSJF.execute(TypeSchedullingAlgorithmEnum.NON_PREEMPTIVE, this.process);
+
+		ResultSchedullingProcess resultSJF = algorithmSJF.execute(TypeSchedullingAlgorithmEnum.NON_PREEMPTIVE,
+				this.process);
 		results.append(this.generateStringResultSchedulling(SchedullingAlgorithmEnum.SJF, resultSJF));
 
-		ResultSchedullingProcess resultSJFP = algorithmSJF.execute(TypeSchedullingAlgorithmEnum.PREEMPTIVE, this.process);
+		ResultSchedullingProcess resultSJFP = algorithmSJF.execute(TypeSchedullingAlgorithmEnum.PREEMPTIVE,
+				this.process);
 		results.append(this.generateStringResultSchedulling(SchedullingAlgorithmEnum.SJF_P, resultSJFP));
-		
+
 		ResultSchedullingProcess resultRR = algorithmRR.execute(TypeSchedullingAlgorithmEnum.PREEMPTIVE, this.process);
 		results.append(this.generateStringResultSchedulling(SchedullingAlgorithmEnum.ROUND_ROBIN, resultRR));
 //		
 		this.generateResultFileSchedulling(results.toString());
 	}
 
-	private String generateStringResultSchedulling(final SchedullingAlgorithmEnum algorithm, final ResultSchedullingProcess resultAlgorithm) {
+	private String generateStringResultSchedulling(final SchedullingAlgorithmEnum algorithm,
+			final ResultSchedullingProcess resultAlgorithm) {
 		StringBuilder results = new StringBuilder();
 
-		results.append(algorithm.getName()).append(" ")
-				.append(resultAlgorithm.getExecutionTime()).append(" ")
-				.append(resultAlgorithm.getResponseTime()).append(" ")
-				.append(resultAlgorithm.getWaitTime())
+		results.append(algorithm.getName()).append(" ").append(resultAlgorithm.getExecutionTime()).append(" ")
+				.append(resultAlgorithm.getResponseTime()).append(" ").append(resultAlgorithm.getWaitTime())
 				.append("\n");
 
 		return results.toString();
 	}
-	
+
 	private void generateResultFileSchedulling(final String results) {
 		String path = "files/process";
 		String nameFile = "schedulling_process_out.txt";

@@ -20,12 +20,37 @@ public class ManagerFile {
 			throw new RuntimeException("Falha ao gerar arquivo.");
 		}
 	}
-	
+
+	public static void deleteFolder(final String path) {
+		File index = new File(path);
+		File[] files = index.listFiles();
+
+		if (index.exists()) {
+			for (File file : files) {
+				file.delete();
+			}
+			index.delete();
+		}
+	}
+
+	public static void deleteFile(final String path, final String nameFile) {
+		File index = new File(path);
+		File[] files = index.listFiles();
+
+		if (index.exists()) {
+			for (File file : files) {
+				if (file.getName().equals(nameFile)) {
+					file.delete();
+				}
+			}
+		}
+	}
+
 	public static void writeFile(final String path, final String nameFile, final String message) {
 		StringBuilder text = new StringBuilder();
 		text.append(readFile(path, nameFile));
 		text.append(message);
-		
+
 		generateFile(path, nameFile, text.toString());
 	}
 
