@@ -5,10 +5,10 @@
 ### Disciplina de Sistemas Operacionais
 
 #### GRUPO 4
-#### Rafael Souza - 15/0081537
-#### Caio Calixto Fasolak Alves - 15/0078676
-#### Jean Rodrigues Magalhães - 15/0079923
-#### Marcelo Áxel C. de Nazaré - 15/0080727}
+####    *Caio Calixto Fasolak Alves - 15/0078676
+####    *Jean Rodrigues Magalhães - 15/0079923
+####    *Marcelo Áxel C. de Nazaré - 15/0080727
+####    *Rafael Oliveira de Souza - 15/0081537
 
 
 Implementação de um pseudo-SO multiprogramado, composto por um Gerenciador de Processos,
