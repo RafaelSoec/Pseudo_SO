@@ -1,9 +1,12 @@
 package unb.modules.memory;
 
 import unb.modules.memory.enums.PaginationAlgorithmEnum;
+import unb.modules.process.dtos.ResultSchedullingProcess;
+import unb.utils.ManagerFile;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Locale;
 
 public class Memory {
     int frames;
@@ -29,9 +32,25 @@ public class Memory {
             type = PaginationAlgorithmEnum.LRU;
         }
 
+        StringBuilder results = new StringBuilder();
+        this.generateResultFilePagination(results.toString());
     }
 
+    private String generateStringResultPagination(final PaginationAlgorithmEnum algorithm) {
+        StringBuilder results = new StringBuilder();
 
+        results.append(algorithm.getName()).append(" ").append("resultAlgorithm.getExecutionTime()").append(" ")
+                .append("resultAlgorithm.getResponseTime()").append(" ").append("resultAlgorithm.getWaitTime()")
+                .append("\n");
 
+        return results.toString();
+    }
 
+    private void generateResultFilePagination(final String results) {
+        String path = "files/memory";
+        String nameFile = "memory_out.txt";
+
+        ManagerFile.generateFile(path, nameFile, results);
+        System.out.println(ManagerFile.readFile(path, nameFile));
+    }
 }
