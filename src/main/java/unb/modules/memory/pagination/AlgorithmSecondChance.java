@@ -1,20 +1,23 @@
 package unb.modules.memory.pagination;
 
+import unb.modules.memory.AbstractPaginationAlgorithm;
+
+import java.util.ArrayList;
 import java.util.LinkedList;
 
 // Segunda Chance: com o bit R sendo zerado a cada 3 referencias feitas a memoria
-public class AlgorithmSecondChance extends Algorithm {
-    LinkedList bits;
+public class AlgorithmSecondChance extends AbstractPaginationAlgorithm {
+    ArrayList<Integer> bits;
     private static int pointer = 0;
 
     public AlgorithmSecondChance(int numeroDeQuadros) {
         super(numeroDeQuadros);
         this.quadros = new LinkedList();
-        this.bits = new LinkedList();
+        this.bits = new ArrayList<Integer>();
     }
 
     @Override
-    public void insert(String pageNumber) {
+    public void memory_insert(String pageNumber) {
         int tmp = quadros.indexOf(pageNumber);
 
         // caso a pagina não esteja em memoria
