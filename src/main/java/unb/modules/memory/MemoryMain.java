@@ -8,15 +8,19 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
 
-public class Memory {
+//O programa deverá ler da entrada padrão um conjunto de número inteiros, dos quais o primeiro número
+//representa a quantidade de quadros de memória disponíveis na RAM e os demais representam a sequência
+//de referências às páginas, sempre um número por linha. O programa deverá imprimir na saída o número
+//de faltas de páginas obtido com a utilização de cada um dos algoritmos.
+public class MemoryMain {
     int frames;
     List<Integer> ref_mem = new ArrayList<Integer>();
 
 
-    public Memory() {
+    public MemoryMain() {
     }
 
-    public Memory(int frames, List<Integer> ref_mem) {
+    public MemoryMain(int frames, List<Integer> ref_mem) {
         this.frames = frames;
         this.ref_mem = ref_mem;
     }
@@ -33,6 +37,8 @@ public class Memory {
         }
 
         StringBuilder results = new StringBuilder();
+
+        results.append(this.generateStringResultPagination(type));
         this.generateResultFilePagination(results.toString());
     }
 

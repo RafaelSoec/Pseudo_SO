@@ -3,6 +3,7 @@ package unb;
 import java.util.ArrayList;
 import java.util.List;
 
+import unb.modules.memory.MemoryMain;
 import unb.modules.process.ProcessMain;
 import unb.modules.process.dtos.Procedure;
 import unb.modules.process.enums.TypeSchedullingAlgorithmEnum;
@@ -13,8 +14,10 @@ import unb.utils.ManagerFile;
 public class App {
     public static void main( String[] args ){
 		String nameFile = "schedulling_process_in.txt";
+		String nameFileMemory = "memory_process_in.txt";
 		
-        toSchedullerProcess("FIFO", nameFile);
+        //toSchedullerProcess("FIFO", nameFile);
+        toMemoryProcess("FIFO", nameFileMemory);
     }
     
     
@@ -53,4 +56,23 @@ public class App {
 //        processManager.toSchedullerProcessWithAllAlgorithms();
         processManager.toSchedullerProcess(algorithm, typeExec);
     }
+
+    public static void toMemoryProcess(final String algorithm, final String nameFile) {
+    	String path = "files/memory";
+
+    	String text = ManagerFile.readFile(path, nameFile);
+
+    	String[] lines = text.split("\n");
+
+    	int frames = Integer.parseInt(lines[0]);
+    	List<Integer> memoryReference = new ArrayList<Integer>();
+    	
+    	for (int i = 1; i < lines.length; i++) {
+    		memoryReference.add(Integer.valueOf(lines[i]));
+		}
+
+		MemoryMain memoryManager = new MemoryMain(frames, memoryReference);
+    	memoryManager.toMemoryProcess(algorithm);
+	}
 }
+
