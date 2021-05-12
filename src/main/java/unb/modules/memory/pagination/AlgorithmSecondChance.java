@@ -11,7 +11,7 @@ public class AlgorithmSecondChance extends AbstractPaginationAlgorithm {
     private static int pointer = 0;
 
     public AlgorithmSecondChance(int numeroDeQuadros) {
-        super(numeroDeQuadros);
+        super.setNumeroDeQuadros(numeroDeQuadros);;
         this.quadros = new LinkedList();
         this.bits = new ArrayList<Integer>();
     }

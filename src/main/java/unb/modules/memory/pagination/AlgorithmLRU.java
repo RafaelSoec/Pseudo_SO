@@ -6,8 +6,9 @@ import java.util.LinkedList;
 
 // LRU: Least Recently Used ou Menos Recentemente Utilizado
 public class AlgorithmLRU extends AbstractPaginationAlgorithm {
+    LinkedList quadros;
     public AlgorithmLRU(int numeroDeQuadros) {
-        super(numeroDeQuadros);
+        super.setNumeroDeQuadros(numeroDeQuadros);;
         this.quadros = new LinkedList();
     }
 

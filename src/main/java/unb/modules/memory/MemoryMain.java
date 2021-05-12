@@ -1,12 +1,14 @@
 package unb.modules.memory;
 
 import unb.modules.memory.enums.PaginationAlgorithmEnum;
-import unb.modules.process.dtos.ResultSchedullingProcess;
+import unb.modules.memory.interfaces.PaginationAlgorithm;
+import unb.modules.memory.pagination.AlgorithmLRU;
+import unb.modules.memory.pagination.AlgorithmPFIFO;
+import unb.modules.memory.pagination.AlgorithmSecondChance;
 import unb.utils.ManagerFile;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Locale;
 
 //O programa deverá ler da entrada padrão um conjunto de número inteiros, dos quais o primeiro número
 //representa a quantidade de quadros de memória disponíveis na RAM e os demais representam a sequência
@@ -27,16 +29,21 @@ public class MemoryMain {
 
     public void toMemoryProcess(String typeAlgh) {
         PaginationAlgorithmEnum type = null;
+        PaginationAlgorithm algorithm = null;
 
         if (typeAlgh.equals(PaginationAlgorithmEnum.FIFO.getName())) {
             type = PaginationAlgorithmEnum.FIFO;
+            algorithm = new AlgorithmPFIFO(frames);
         } else if (typeAlgh.equals(PaginationAlgorithmEnum.Second_Chance.getName())) {
             type = PaginationAlgorithmEnum.Second_Chance;
+           // algorithm = new AlgorithmLRU();
         } else {
             type = PaginationAlgorithmEnum.LRU;
+            //algorithm = new AlgorithmSecondChance();
         }
 
         StringBuilder results = new StringBuilder();
+       // int FaultCounter = algorithm.memory_insert(ref_mem);
 
         results.append(this.generateStringResultPagination(type));
         this.generateResultFilePagination(results.toString());
