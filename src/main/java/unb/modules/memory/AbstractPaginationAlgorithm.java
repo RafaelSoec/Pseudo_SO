@@ -20,6 +20,4 @@ public abstract class AbstractPaginationAlgorithm implements PaginationAlgorithm
     public int getPageFaultCount() {
         return numeroDeFalhas;
     }
-
-    //public abstract void memory_insert(String pageNumber);
 }

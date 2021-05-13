@@ -1,5 +1,6 @@
 package unb.modules.memory;
 
+import unb.modules.memory.dtos.ResultPaginationProcess;
 import unb.modules.memory.enums.PaginationAlgorithmEnum;
 import unb.modules.memory.interfaces.PaginationAlgorithm;
 import unb.modules.memory.pagination.AlgorithmLRU;
@@ -43,18 +44,16 @@ public class MemoryMain {
         }
 
         StringBuilder results = new StringBuilder();
-       // int FaultCounter = algorithm.memory_insert(ref_mem);
-
-        results.append(this.generateStringResultPagination(type));
+        algorithm.memory_insert(ref_mem);
+        ResultPaginationProcess resultPag = null;
+        results.append(this.generateStringResultPagination(type, resultPag));
         this.generateResultFilePagination(results.toString());
     }
 
-    private String generateStringResultPagination(final PaginationAlgorithmEnum algorithm) {
+    private String generateStringResultPagination(final PaginationAlgorithmEnum algorithm, final ResultPaginationProcess resultAlgorithm) {
         StringBuilder results = new StringBuilder();
 
-        results.append(algorithm.getName()).append(" ").append("resultAlgorithm.getExecutionTime()").append(" ")
-                .append("resultAlgorithm.getResponseTime()").append(" ").append("resultAlgorithm.getWaitTime()")
-                .append("\n");
+        results.append(algorithm.getName()).append(" ").append("resultAlgorithm.getNumeroDeFalhas()").append("\n");
 
         return results.toString();
     }

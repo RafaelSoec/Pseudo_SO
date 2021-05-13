@@ -3,6 +3,7 @@ package unb.modules.memory.pagination;
 import unb.modules.memory.AbstractPaginationAlgorithm;
 
 import java.util.LinkedList;
+import java.util.List;
 
 // LRU: Least Recently Used ou Menos Recentemente Utilizado
 public class AlgorithmLRU extends AbstractPaginationAlgorithm {
@@ -13,7 +14,8 @@ public class AlgorithmLRU extends AbstractPaginationAlgorithm {
     }
 
     @Override
-    public void memory_insert(String pageNumber) {
+    public void memory_insert(List<Integer> pageNumbers) {
+        String pageNumber = null;
         int tmp = quadros.indexOf(pageNumber);
         // Verifica se pagina ja esta na lista
         if (tmp == -1) {
