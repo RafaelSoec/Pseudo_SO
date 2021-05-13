@@ -17,9 +17,13 @@ import unb.utils.ManagerFile;
 
 import java.util.ArrayList;
 import java.util.List;
-
+/** Jean Rodrigues Magalhães - 15/0079923
+ *
+ * Nesta classe ocorrem as principais chamadas de função e utilização de cada algoritmo de gerencia de entrada/saída toManageIOWithAllAlgorithms()
+ * e contém o método generateResultIOFileAlgorithm() que gera o arquivo com os dados solicitados de saída.
+ *
+ * */
 public class InputOutputMain {
-
 
     private DiskDriver diskDriver;
 
@@ -32,7 +36,6 @@ public class InputOutputMain {
 
 
     public void toManageIOWithAllAlgorithms() {
-
         List<ResultInputOutputAlgorithm> list = new ArrayList<>();
         AlgorithmFCFS algorithmFCFS = new AlgorithmFCFS();
         AlgorithmSSTF algorithmSSTF = new AlgorithmSSTF();
@@ -48,7 +51,6 @@ public class InputOutputMain {
         list.add(resultSCAN);
 
         this.generateResultIOFileAlgorithm(list);
-
     }
 
     protected void generateResultIOFileAlgorithm(List<ResultInputOutputAlgorithm> resultList) {

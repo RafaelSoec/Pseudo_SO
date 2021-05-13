@@ -4,6 +4,11 @@ import unb.modules.process.dtos.Procedure;
 
 import java.util.List;
 
+/** Jean Rodrigues Magalhães - 15/0079923
+ *
+ * DTO que armazena as informações dos cilindros, bem como último cilindro, cilindro onde o braço se encontra e uma lista com os numeros dos seguintes cilindros
+ * requisitados.
+ * */
 public class DiskDriver {
     private int lastCylinder;
     private int currentCylinder;
