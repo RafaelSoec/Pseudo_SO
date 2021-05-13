@@ -1,6 +1,7 @@
 package unb.modules.inputoutput;
 
 import unb.modules.inputoutput.Algorithms.AlgorithmFCFS;
+import unb.modules.inputoutput.Algorithms.AlgorithmSCAN;
 import unb.modules.inputoutput.Algorithms.AlgorithmSSTF;
 import unb.modules.inputoutput.dtos.DiskDriver;
 import unb.modules.inputoutput.dtos.ResultInputOutputAlgorithm;
@@ -35,12 +36,16 @@ public class InputOutputMain {
         List<ResultInputOutputAlgorithm> list = new ArrayList<>();
         AlgorithmFCFS algorithmFCFS = new AlgorithmFCFS();
         AlgorithmSSTF algorithmSSTF = new AlgorithmSSTF();
+        AlgorithmSCAN algorithmSCAN = new AlgorithmSCAN();
 
         ResultInputOutputAlgorithm resultFCFS = algorithmFCFS.run(this.diskDriver);
         list.add(resultFCFS);
 
         ResultInputOutputAlgorithm resultSSTF = algorithmSSTF.run(this.diskDriver);
         list.add(resultSSTF);
+
+        ResultInputOutputAlgorithm resultSCAN = algorithmSCAN.run(this.diskDriver);
+        list.add(resultSCAN);
 
         this.generateResultIOFileAlgorithm(list);
 
@@ -49,6 +54,10 @@ public class InputOutputMain {
     protected void generateResultIOFileAlgorithm(List<ResultInputOutputAlgorithm> resultList) {
         String path = "files/input_output_manager";
         String nameFile = "requests_out.txt";
+
+        System.out.println("-----------------------\n");
+        System.out.println("Módulo de Entrada/Saída:\n");
+
         StringBuilder results = new StringBuilder();
 
         for (ResultInputOutputAlgorithm alg : resultList) {

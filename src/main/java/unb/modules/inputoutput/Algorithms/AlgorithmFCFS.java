@@ -3,6 +3,7 @@ package unb.modules.inputoutput.Algorithms;
 import unb.modules.inputoutput.dtos.DiskDriver;
 import unb.modules.inputoutput.dtos.ResultInputOutputAlgorithm;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class AlgorithmFCFS {
@@ -11,7 +12,7 @@ public class AlgorithmFCFS {
 
         ResultInputOutputAlgorithm result = new ResultInputOutputAlgorithm();
         result.setAlgorithmName("FCFS");
-        List<Integer> listRequests = diskDriver.getRequests();
+        List<Integer> listRequests = new ArrayList<>(diskDriver.getRequests());
         Integer totalCylinders = 0;
 
         if(listRequests.get(0) < diskDriver.getcurrentCylinder()) {
