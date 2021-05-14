@@ -32,4 +32,6 @@ Execuçao do programa:
     execute a classe main - App.java e defina os argumentos desejados
     
 * Utilizando linha de comando:
-    javac /modules App.java Argumento1 Argumento2 
+  java -cp target/classes  -Dfile.encoding=UTF-8 unb.App <codigo do modulo> <arquivo.txt>
+
+  

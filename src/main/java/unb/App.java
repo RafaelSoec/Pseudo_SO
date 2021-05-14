@@ -7,7 +7,7 @@ import unb.modules.kernel.KernelMain;
  *  Integrantes:
  *  Caio Calixto Fasolak Alves - 15/0078676
  * 	Jean Rodrigues Magalhães - 15/0079923
- * 	Marcelo Áxel C. de Nazaré - 15/0080727
+ * 	Marcelo Axel C. de Nazaré - 15/0080727
  * 	Rafael Oliveira de Souza - 15/0081537
  * 
  */

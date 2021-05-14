@@ -1,6 +1,6 @@
 SJF
 
-Rodar processo de [1] de [0] ate [10]
-Rodar processo de [2] de [10] ate [16]
-Rodar processo de [3] de [16] ate [24]
-Rodar processo de [0] de [24] ate [44]
+Rodar processo de [0] de [0] ate [7]
+Rodar processo de [2] de [7] ate [8]
+Rodar processo de [1] de [8] ate [12]
+Rodar processo de [3] de [12] ate [16]
