@@ -15,6 +15,10 @@ import unb.utils.ManagerFile;
  */
 public class App {
     public static void main( String[] args ){
+    	//int runOption = Integer.parseInt(args[0]);
+
+
+
 		String nameFile = "schedulling_process_in.txt";
 		String nameFileInputOutput = "requests_in.txt";
 		String nameFileMemory = "memory_process_in.txt";
