@@ -2,6 +2,7 @@ package unb;
 
 import unb.modules.kernel.KernelMain;
 
+
 /** Pseudo Sistema Operacional implementado para a disciplina de sistemas operacionais.
  *  Integrantes:
  *  Caio Calixto Fasolak Alves - 15/0078676
@@ -13,8 +14,10 @@ import unb.modules.kernel.KernelMain;
 
 
 //Apenas para iniciar o pseudo SO.
+
 public class App {
     public static void main( String[] args ){
+		
 
     	KernelMain kernel = new KernelMain(args);
     	kernel.execute();
