@@ -2,12 +2,14 @@ package unb.modules.process;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.concurrent.Semaphore;
 
 import unb.modules.process.dtos.Procedure;
 import unb.modules.process.dtos.ResultSchedullingProcess;
 import unb.modules.process.enums.SchedullingAlgorithmEnum;
 import unb.modules.process.enums.TypeSchedullingAlgorithmEnum;
 import unb.modules.process.interfaces.SchedulingAlgorithm;
+import unb.modules.threads.ThreadImpl;
 import unb.utils.ManagerFile;
 import unb.utils.MathUtils;
 
@@ -17,9 +19,9 @@ public abstract class AbstractSchedulingAlgorithm implements SchedulingAlgorithm
 	public abstract ResultSchedullingProcess nonPreemptiveExecution(List<Procedure> procedures);
 
 	public ResultSchedullingProcess execute(TypeSchedullingAlgorithmEnum type, List<Procedure> procedures) {
-		if(TypeSchedullingAlgorithmEnum.NON_PREEMPTIVE.equals(type)) {
+		if (TypeSchedullingAlgorithmEnum.NON_PREEMPTIVE.equals(type)) {
 			return this.nonPreemptiveExecution(procedures);
-		}else {
+		} else {
 			return this.preemptiveExecution(procedures);
 		}
 	}
@@ -87,12 +89,6 @@ public abstract class AbstractSchedulingAlgorithm implements SchedulingAlgorithm
 		List<ResultSchedullingProcess> listAverageResult = new ArrayList<ResultSchedullingProcess>();
 		List<Long> proceduresActives = new ArrayList<Long>();
 
-		System.out.print("Diagrama de Gant: [ ");
-		for (Procedure proc : procedureList) {
-			System.out.print(proc.getId() + " ");
-		}
-		System.out.print("]\n\n");
-		
 		Double executionTime = 0D;
 		Double responseTime = 0D;
 		Double waitTime = 0D;
@@ -130,8 +126,8 @@ public abstract class AbstractSchedulingAlgorithm implements SchedulingAlgorithm
 					totalResponseTime = totalResponseTime < 0 ? 0 : totalResponseTime;
 					responseTime = Double.valueOf(totalResponseTime);
 					waitTime = responseTime;
-					
-					if(waitTime > 0) {
+
+					if (waitTime > 0) {
 						executionTime += responseTime;
 					}
 				}
@@ -147,6 +143,9 @@ public abstract class AbstractSchedulingAlgorithm implements SchedulingAlgorithm
 
 		}
 
+		// executa os processos do semaforo
+		this.executeSemaphore(listAverageResult);
+		
 		waitTime = 0D;
 		responseTime = 0D;
 		executionTime = 0D;
@@ -161,7 +160,27 @@ public abstract class AbstractSchedulingAlgorithm implements SchedulingAlgorithm
 		averageResult.setExecutionTime(MathUtils.round((executionTime / max), 2));
 		averageResult.setResponseTime(MathUtils.round((responseTime / max), 2));
 		averageResult.setWaitTime(MathUtils.round((waitTime / max), 2));
+		
+		System.out.print("Diagrama de Gant: [ ");
+		for (Procedure proc : procedureList) {
+			System.out.print(proc.getId() + " ");
+		}
+		System.out.print("]\n\n");
 
 		return averageResult;
+	}
+
+	private void executeSemaphore(List<ResultSchedullingProcess> listAverageResult) {
+		Integer qtdProcess = listAverageResult.size();
+	    ThreadImpl[] process = new ThreadImpl[qtdProcess];
+	    Semaphore semaphore = new Semaphore(1);
+
+		for (int i = 0; i < qtdProcess; i++) {
+			Double executionTime = listAverageResult.get(i).getExecutionTime();
+	    	process[i] = new ThreadImpl(i, semaphore, executionTime);
+	    	process[i].start();
+
+			while(!process[i].finished());
+		}
 	}
 }

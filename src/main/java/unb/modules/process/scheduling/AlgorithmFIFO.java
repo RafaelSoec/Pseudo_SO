@@ -25,6 +25,8 @@ public class AlgorithmFIFO extends AbstractSchedulingAlgorithm {
 		List<Procedure> proceduresAux = super.generateProcedureListAux(procedures);
 		// Sortear processos pelo tempo de chegada
 		Collections.sort(proceduresAux, new ProcessComparatorArrival());
+		
+		//iniciar semaforo
 		for (int i = 0; i < proceduresAux.size(); i++) {
 			// salvar tempos dos processos
 			int timeLeft = proceduresAux.get(i).getDurationTime();

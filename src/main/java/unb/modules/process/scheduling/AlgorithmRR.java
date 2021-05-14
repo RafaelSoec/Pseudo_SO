@@ -44,10 +44,6 @@ public class AlgorithmRR extends AbstractSchedulingAlgorithm {
 		// Sortear processos pelo tempo de chegada
 		Collections.sort(proceduresAux, new ProcessComparatorArrival());
 //		// No round Robin o tempo de chegada é zero pra todos processos
-//		for(Procedure proc : proceduresAux) {
-//			proc.setArrivalTime(0);
-//		}
-
 		List<Procedure> procedureList = new ArrayList<Procedure>();
 		int execTimeAlg = 0;
 		while (!proceduresAux.isEmpty()) {
