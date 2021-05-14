@@ -22,3 +22,14 @@ receber como parâmetro um inteiro e um arquivo texto, por exemplo $ 1 processes
 qual módulo deve ser ativado (no exemplo dado significa que será ativado o módulo de processos, pois foi o
 inteiro 1), e o arquivo texto (com extensão .txt) repassa os dados de entrada necessários para a execução do
 módulo escolhido.
+
+
+Execuçao do programa:
+    Argumento1 : Codigo do modulo a executado ( 1 = Modulo de processo, 2 = Modulo de memória, 3 = módulo de entrada e saida)
+    Argumento2 : Arquivo de entrada para a execução dos algoritmos.
+
+* Utilizando uma IDE:
+    execute a classe main - App.java e defina os argumentos desejados
+    
+* Utilizando linha de comando:
+    javac /modules App.java Argumento1 Argumento2 
