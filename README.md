@@ -33,5 +33,8 @@ Execuçao do programa:
     
 * Utilizando linha de comando:
   java -cp target/classes unb.App <codigo_modulo> <arquivo.txt>
-
   
+*Obs: O arquivo de entrada definido como o argumento <arquivo.txt> precisa estar localizado na raiz do projeto e na pasta referente ao módulo que se deseja executar.
+*Módulo de Processo: O arquivo de entrada precisa estar no diretório "files/process";
+*Módulo de Memória: O arquivo de entrada precisa estar no diretório "files/memory";
+*Módulo de Entrada e Saída: O arquivo de entrada precisa estar no diretório "files/input_output_manager";
