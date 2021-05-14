@@ -36,11 +36,10 @@ public class AlgorithmSJF extends AbstractSchedulingAlgorithm {
 		List<Procedure> proceduresAux = super.generateProcedureListAux(procedures);
 		// Sortear processos pelo tempo de chegada e duracao
 		Collections.sort(proceduresAux, new ProcessComparatorArrivalAndDuration());
-		
+
 		if (!proceduresAux.isEmpty()) {
 			Procedure proc = proceduresAux.get(0);
 			int durationTime = proc.getDurationTime();
-
 			while (durationTime > 0) {
 				procedureList.add(proc);
 				durationTime--;
@@ -50,8 +49,8 @@ public class AlgorithmSJF extends AbstractSchedulingAlgorithm {
 
 		// Sortear processos pelo tempo de duração
 		Collections.sort(proceduresAux, new ProcessComparatorDuration());
-
-		for (Procedure proced : proceduresAux) {
+		for (int i = 0; i < proceduresAux.size(); i++) {
+			Procedure proced = proceduresAux.get(i);
 			int durationTime = proced.getDurationTime();
 			while (durationTime > 0) {
 				procedureList.add(proced);
@@ -72,12 +71,11 @@ public class AlgorithmSJF extends AbstractSchedulingAlgorithm {
 		// Sortear processos pelo tempo de duração
 		Collections.sort(procedures, new ProcessComparatorArrival());
 		List<Procedure> proceduresAux = super.generateProcedureListAux(procedures);
-		
+	    
 		int actualIndex = 0;
 		while (!proceduresAux.isEmpty()) {
 			int nextIndex = actualIndex + 1;
 			Procedure actualProc = proceduresAux.get(actualIndex);
-
 			int durationTime = actualProc.getDurationTime();
 			// Executa o ultimo processo até o final
 			if (proceduresAux.size() == 1) {
@@ -115,7 +113,6 @@ public class AlgorithmSJF extends AbstractSchedulingAlgorithm {
 					actualProc.setDurationTime(durationTime);
 					procedureList.add(actualProc);
 				}
-
 				actualIndex++;
 				// Evita erros de indices no array
 				if (actualIndex >= proceduresAux.size()) {

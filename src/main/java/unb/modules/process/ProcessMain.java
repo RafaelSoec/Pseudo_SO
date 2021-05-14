@@ -55,6 +55,7 @@ public class ProcessMain {
 			}
 		}
 		
+		
 //		TypeSchedullingAlgorithmEnum typeExec = TypeSchedullingAlgorithmEnum.NON_PREEMPTIVE;
 //		if(algorithm.contains("PREEMPTIVE")) {
 //			typeExec = TypeSchedullingAlgorithmEnum.PREEMPTIVE;
@@ -107,9 +108,9 @@ public class ProcessMain {
 				this.process);
 		results.append(this.generateStringResultSchedulling(SchedullingAlgorithmEnum.SJF, resultSJF));
 
-		ResultSchedullingProcess resultSJFP = algorithmSJF.execute(TypeSchedullingAlgorithmEnum.PREEMPTIVE,
-				this.process);
-		results.append(this.generateStringResultSchedulling(SchedullingAlgorithmEnum.SJF_P, resultSJFP));
+//		ResultSchedullingProcess resultSJFP = algorithmSJF.execute(TypeSchedullingAlgorithmEnum.PREEMPTIVE,
+//				this.process);
+//		results.append(this.generateStringResultSchedulling(SchedullingAlgorithmEnum.SJF_P, resultSJFP));
 
 		ResultSchedullingProcess resultRR = algorithmRR.execute(TypeSchedullingAlgorithmEnum.PREEMPTIVE, this.process);
 		results.append(this.generateStringResultSchedulling(SchedullingAlgorithmEnum.ROUND_ROBIN, resultRR));
