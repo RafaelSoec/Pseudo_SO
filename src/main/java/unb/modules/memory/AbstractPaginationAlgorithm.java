@@ -2,9 +2,9 @@ package unb.modules.memory;
 
 
 
-import unb.modules.memory.interfaces.PaginationAlgorithm;
-
 import java.util.LinkedList;
+
+import unb.modules.memory.interfaces.PaginationAlgorithm;
 
 public abstract class AbstractPaginationAlgorithm implements PaginationAlgorithm {
     protected int pageFault;

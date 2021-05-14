@@ -1,0 +1,6 @@
+SJF
+
+Rodar processo de [0] de [0] ate [20]
+Rodar processo de [2] de [20] ate [26]
+Rodar processo de [3] de [26] ate [34]
+Rodar processo de [1] de [34] ate [44]

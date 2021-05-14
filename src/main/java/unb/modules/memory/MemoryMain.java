@@ -26,6 +26,27 @@ public class MemoryMain {
         this.frames = frames;
         this.ref_mem = ref_mem;
     }
+    
+    public void executeMemoryProcess(String nameFileMemory) {
+        toMemoryProcess("FIFO", nameFileMemory);
+		toMemoryProcess("SC", nameFileMemory);
+        toMemoryProcess("LRU", nameFileMemory);
+    }
+    
+    public void toMemoryProcess(final String algorithm, final String nameFile) {
+    	String path = "files/memory";
+
+    	String text = ManagerFile.readFile(path, nameFile);
+
+    	String[] lines = text.split("\n");
+
+    	this.frames = Integer.parseInt(lines[0]);
+    	for (int i = 1; i < lines.length; i++) {
+    		this.ref_mem.add(Integer.valueOf(lines[i]));
+		}
+
+    	this.toMemoryProcess(algorithm);
+	}
 
     public void toMemoryProcess(String typeAlgh) {
         PaginationAlgorithmEnum type = null;
