@@ -25,8 +25,8 @@ public class AlgorithmSSTF {
         Integer test = diskDriver.getLastCylinder() + 1;
 
         //nesta parte é descoberto, dentre todas as requisições, qual será o próximo cilindro do cilindro atual
-        for (int i = 0; i < listRequests.size() - 1; i++){
-            if (listRequests.get(i) < diskDriver.getcurrentCylinder() && test > diskDriver.getcurrentCylinder() - listRequests.get(i)){
+        for (int i = 0; i < listRequests.size(); i++){
+            if (listRequests.get(i) <= diskDriver.getcurrentCylinder() && test > diskDriver.getcurrentCylinder() - listRequests.get(i)){
                 test = diskDriver.getcurrentCylinder() - listRequests.get(i);
                 newCurrent = listRequests.indexOf(listRequests.get(i));
             }

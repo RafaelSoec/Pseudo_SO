@@ -37,8 +37,8 @@ public class AlgorithmSCAN {
         }
 
         //nesta parte é descoberto, dentre todas as requisições, qual será o próximo cilindro abaixo do atual e mais proximo
-        for (int i = 0; i < listRequests.size() - 1 ; i++){
-            if (listRequests.get(i) < diskDriver.getcurrentCylinder() && test > diskDriver.getcurrentCylinder() - listRequests.get(i)) {
+        for (int i = 0; i < listRequests.size(); i++){
+            if (listRequests.get(i) <= diskDriver.getcurrentCylinder() && test > diskDriver.getcurrentCylinder() - listRequests.get(i)) {
                 test = diskDriver.getcurrentCylinder() - listRequests.get(i);
                 newCurrent = listRequests.indexOf(listRequests.get(i));
             }
