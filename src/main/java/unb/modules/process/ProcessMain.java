@@ -33,6 +33,7 @@ public class ProcessMain {
     public void executeProcess(final String nameFile){
 		String path = "files/process";
 		
+	    	//Lê o arquivo de entrada, separada cada linha em um processo e executa todos os algoritmos de escalonamento.
 		String text = ManagerFile.readFile(path, nameFile);
 		String[] lines = text.split("\n");
 
@@ -43,13 +44,12 @@ public class ProcessMain {
 				Integer arrivalTime = Integer.valueOf(values[0]);
 				Integer durationTime = Integer.valueOf(values[1]);
 				
-		    	Procedure proc = new Procedure();
-		    	proc.setArrivalTime(arrivalTime);
-		    	proc.setDurationTime(durationTime);
-		    	proc.setId(Long.valueOf(i));
-		    	
-		    	this.process.add(proc);
-				
+				Procedure proc = new Procedure();
+				proc.setArrivalTime(arrivalTime);
+				proc.setDurationTime(durationTime);
+				proc.setId(Long.valueOf(i));
+
+				this.process.add(proc);
 			}else {
 				throw new RuntimeException("O arquivo de entrada não está com o formato de texto correto;");
 			}
