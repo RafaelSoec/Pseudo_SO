@@ -29,25 +29,27 @@ public class AlgorithmSecondChance extends AbstractPaginationAlgorithm {
             // caso a pagina não esteja em memoria
             if (tmp == -1) {
                 pageFault++;
-
+                // Caso tenha espaço insere no final da fila
                 if (memoryList.size() < frames) {
                     memoryList.add(pageNumbers.get(i));
                     bits.add(0);
                 } else {
-                    // Encontrar primeiro mais antigo nao utilizado recentemente
+                    // Verifica o bit R para encontrar primeiro mais antigo nao utilizado recentemente
                     while (bits.get(pointer) == 1 && pointer < frames - 1) {
                         pointer++;
                     }
 
-                    //substituicao
+                    // Remove o menos utilizado e insere o novo elemento no final da lista
                     memoryList.remove(pointer);
                     bits.remove(pointer);
                     memoryList.add(pageNumbers.get(i));
                     bits.add(0);
                 }
+            // Se ja esta na memoria seta o bit R para 1
             } else
                 bits.set(tmp, 1);
 
+            // Acrescenta o contador a cada referencia da memória, quando chega em 3 zera a lista de bits R
             counter++;
             if (counter == 3) {
                 for (int z = 0; z < bits.size(); z++) {

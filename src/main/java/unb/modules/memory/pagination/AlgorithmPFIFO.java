@@ -23,13 +23,13 @@ public class AlgorithmPFIFO extends AbstractPaginationAlgorithm {
             // Verificar se pagina ja esta na lista
             if (!memoryList.contains(pageNumbers.get(i))) {
                 pageFault++;
-                // Verificar se ainda tem espaço na memoria
+                // Verifica se ainda tem espaço na memoria, se sim insere no final da fila
                 if (memoryList.size() < frames)
                     memoryList.add(pageNumbers.get(i));
+                // Senao remove o primeiro elemento e insere o novo elemento no final da fila
                 else {
                     memoryList.remove();
                     memoryList.add(pageNumbers.get(i));
-                    //insertion++;
                 }
             }
         }
