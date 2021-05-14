@@ -7,11 +7,10 @@ import java.util.List;
 
 // FIFO: First In, First Out
 public class AlgorithmPFIFO extends AbstractPaginationAlgorithm {
-    private static int insertion = 0;
 
-    public AlgorithmPFIFO(int numeroDeQuadros) {
-        super.setNumeroDeQuadros(numeroDeQuadros);
-        this.quadros = new LinkedList();
+    public AlgorithmPFIFO(int frames) {
+        super.setFrames(frames);
+        this.memoryList = new LinkedList();
     }
 
     public int getPageFaultCount() {
@@ -19,20 +18,21 @@ public class AlgorithmPFIFO extends AbstractPaginationAlgorithm {
     }
 
     @Override
-    public void memory_insert(List<Integer> pageNumbers) {
+    public int memory_insert(List<Integer> pageNumbers) {
         for (int i = 0; i < pageNumbers.size(); i++) {
             // Verificar se pagina ja esta na lista
-            if (!quadros.contains(pageNumbers.get(i))) {
+            if (!memoryList.contains(pageNumbers.get(i))) {
+                pageFault++;
                 // Verificar se ainda tem espaço na memoria
-                if (quadros.size() < numeroDeQuadros)
-                    quadros.add(pageNumbers.get(i));
+                if (memoryList.size() < frames)
+                    memoryList.add(pageNumbers.get(i));
                 else {
-                    quadros.remove(insertion);
-                    quadros.add(insertion, pageNumbers.get(i));
+                    memoryList.remove();
+                    memoryList.add(pageNumbers.get(i));
                     //insertion++;
                 }
-                numeroDeFalhas++;
             }
         }
+        return pageFault;
     }
 }

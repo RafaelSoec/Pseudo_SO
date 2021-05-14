@@ -7,25 +7,28 @@ import java.util.List;
 
 // LRU: Least Recently Used ou Menos Recentemente Utilizado
 public class AlgorithmLRU extends AbstractPaginationAlgorithm {
-    LinkedList quadros;
-    public AlgorithmLRU(int numeroDeQuadros) {
-        super.setNumeroDeQuadros(numeroDeQuadros);;
-        this.quadros = new LinkedList();
+    LinkedList memoryList;
+    public AlgorithmLRU(int frames) {
+        super.setFrames(frames);
+        this.memoryList = new LinkedList();
     }
 
     @Override
-    public void memory_insert(List<Integer> pageNumbers) {
-        String pageNumber = null;
-        int tmp = quadros.indexOf(pageNumber);
-        // Verifica se pagina ja esta na lista
-        if (tmp == -1) {
-            if (quadros.size() >= numeroDeQuadros)
-                quadros.remove(0);
-            quadros.add(pageNumber);
-            numeroDeFalhas++;
-        } else {
-            quadros.remove(tmp);
-            quadros.add(pageNumber);
+    public int memory_insert(List<Integer> pageNumbers) {
+        int tmp;
+        for (int i = 0; i < pageNumbers.size(); i++) {
+            // Verifica se pagina ja esta na lista
+            tmp = memoryList.indexOf(pageNumbers.get(i));
+
+            if (tmp == -1) {
+                pageFault++;
+                if (memoryList.size() >= frames)
+                    memoryList.remove();
+            } else {
+                memoryList.remove(tmp);
+            }
+            memoryList.add(pageNumbers.get(i));
         }
+        return pageFault;
     }
 }

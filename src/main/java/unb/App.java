@@ -18,6 +18,8 @@ public class App {
 		
         //toSchedullerProcess("FIFO", nameFile);
         toMemoryProcess("FIFO", nameFileMemory);
+		toMemoryProcess("SC", nameFileMemory);
+        toMemoryProcess("LRU", nameFileMemory);
     }
     
     

@@ -2,7 +2,7 @@ package unb.modules.memory.enums;
 
 public enum PaginationAlgorithmEnum {
     FIFO("FIFO"),
-    Second_Chance("Second Chance"),
+    Second_Chance("SC"),
     LRU("LRU");
 
     private String name;

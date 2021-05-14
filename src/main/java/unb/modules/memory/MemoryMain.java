@@ -1,6 +1,5 @@
 package unb.modules.memory;
 
-import unb.modules.memory.dtos.ResultPaginationProcess;
 import unb.modules.memory.enums.PaginationAlgorithmEnum;
 import unb.modules.memory.interfaces.PaginationAlgorithm;
 import unb.modules.memory.pagination.AlgorithmLRU;
@@ -37,23 +36,22 @@ public class MemoryMain {
             algorithm = new AlgorithmPFIFO(frames);
         } else if (typeAlgh.equals(PaginationAlgorithmEnum.Second_Chance.getName())) {
             type = PaginationAlgorithmEnum.Second_Chance;
-           // algorithm = new AlgorithmLRU();
+            algorithm = new AlgorithmSecondChance(frames);
         } else {
             type = PaginationAlgorithmEnum.LRU;
-            //algorithm = new AlgorithmSecondChance();
+            algorithm = new AlgorithmLRU(frames);
         }
 
         StringBuilder results = new StringBuilder();
-        algorithm.memory_insert(ref_mem);
-        ResultPaginationProcess resultPag = null;
-        results.append(this.generateStringResultPagination(type, resultPag));
+        int resultFault = algorithm.memory_insert(ref_mem);
+        results.append(this.generateStringResultPagination(type, resultFault));
         this.generateResultFilePagination(results.toString());
     }
 
-    private String generateStringResultPagination(final PaginationAlgorithmEnum algorithm, final ResultPaginationProcess resultAlgorithm) {
+    private String generateStringResultPagination(final PaginationAlgorithmEnum algorithm, final int resultAlgorithm) {
         StringBuilder results = new StringBuilder();
 
-        results.append(algorithm.getName()).append(" ").append("resultAlgorithm.getNumeroDeFalhas()").append("\n");
+        results.append(algorithm.getName()).append(" ").append(resultAlgorithm).append("\n");
 
         return results.toString();
     }

@@ -1,23 +1,24 @@
 package unb.modules.memory;
 
 
+
 import unb.modules.memory.interfaces.PaginationAlgorithm;
 
 import java.util.LinkedList;
 
 public abstract class AbstractPaginationAlgorithm implements PaginationAlgorithm {
-    protected int numeroDeFalhas;
-    protected int numeroDeQuadros;
-    public LinkedList quadros;
+    protected int pageFault;
+    protected int frames;
+    public LinkedList memoryList;
 
-    public void setNumeroDeQuadros(int numeroDeQuadros) {
-        if (numeroDeQuadros < 0)
+    public void setFrames(int frames) {
+        if (frames < 0)
             throw new IllegalArgumentException();
-        this.numeroDeQuadros = numeroDeQuadros;
-        numeroDeFalhas = 0;
+        this.frames = frames;
+        pageFault = 0;
     }
 
     public int getPageFaultCount() {
-        return numeroDeFalhas;
+        return pageFault;
     }
 }
