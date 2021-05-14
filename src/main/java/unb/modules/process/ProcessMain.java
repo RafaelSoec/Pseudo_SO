@@ -29,6 +29,41 @@ public class ProcessMain {
 	public ProcessMain(List<Procedure> process) {
 		this.process = process;
 	}
+    
+    public void executeProcess(final String nameFile){
+		String path = "files/process";
+		
+		String text = ManagerFile.readFile(path, nameFile);
+		String[] lines = text.split("\n");
+
+		for(int i = 0; i < lines.length; i++) {
+			String[] values = lines[i].split(" ");
+			
+			if(values.length == 2){
+				Integer arrivalTime = Integer.valueOf(values[0]);
+				Integer durationTime = Integer.valueOf(values[1]);
+				
+		    	Procedure proc = new Procedure();
+		    	proc.setArrivalTime(arrivalTime);
+		    	proc.setDurationTime(durationTime);
+		    	proc.setId(Long.valueOf(i));
+		    	
+		    	this.process.add(proc);
+				
+			}else {
+				throw new RuntimeException("O arquivo de entrada não está com o formato de texto correto;");
+			}
+		}
+		
+//		TypeSchedullingAlgorithmEnum typeExec = TypeSchedullingAlgorithmEnum.NON_PREEMPTIVE;
+//		if(algorithm.contains("PREEMPTIVE")) {
+//			typeExec = TypeSchedullingAlgorithmEnum.PREEMPTIVE;
+//		}
+
+//        ProcessMain processManager = new ProcessMain(procedures);
+        this.toSchedullerProcessWithAllAlgorithms();
+//        this.toSchedullerProcess(algorithm, typeExec);
+    }
 
 	public void toSchedullerProcess(String typeAlgh, TypeSchedullingAlgorithmEnum typeExec) {
 		SchedullingAlgorithmEnum type = null;
