@@ -32,6 +32,6 @@ Execuçao do programa:
     execute a classe main - App.java e defina os argumentos desejados
     
 * Utilizando linha de comando:
-  java -cp target/classes  -Dfile.encoding=UTF-8 unb.App <codigo_modulo> <arquivo.txt>
+  java -cp target/classes unb.App <codigo_modulo> <arquivo.txt>
 
   
